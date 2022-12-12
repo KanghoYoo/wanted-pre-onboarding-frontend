@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 
 function Login() {
+  const [userId, setUserId] = useState<String>("");
+  const [userPassword, setUserPassword] = useState<String>("");
+
+  const onChangeId = (e: any) => {
+    setUserId(e.target.value);
+  };
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserPassword(e.target.value);
+  };
+
   return (
     <Background>
       <Container>
@@ -14,6 +24,7 @@ function Login() {
             <IdInput
               type="email"
               placeholder="아이디를 입력해주세요."
+              onChange={onChangeId}
             ></IdInput>
           </Label>
           <Label>
@@ -21,6 +32,7 @@ function Login() {
             <PasswordInput
               type="password"
               placeholder="비밀번호를 입력해주세요."
+              onChange={onChangePassword}
             ></PasswordInput>
           </Label>
         </FormWrapper>
