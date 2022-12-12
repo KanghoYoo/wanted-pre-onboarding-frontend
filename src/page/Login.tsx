@@ -1,36 +1,110 @@
 import React from "react";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 
 function Login() {
   return (
     <Background>
       <Container>
+        <MainText>Login</MainText>
         <FormWrapper>
-          <Label>아이디</Label>
-          <IdInput type="email" placeholder="아이디를 입력해주세요."></IdInput>
-          <Label>비밀번호</Label>
-          <PasswordInput
-            type="password"
-            placeholder="비밀번호를 입력해주세요."
-          ></PasswordInput>
-          <ButtonWrapper>
-            <LoginButton>로그인</LoginButton>
-            <SignupButton>회원가입</SignupButton>
-          </ButtonWrapper>
+          <Label>
+            <FontAwesomeIcon icon={faUser} />
+            <IdInput
+              type="email"
+              placeholder="아이디를 입력해주세요."
+            ></IdInput>
+          </Label>
+          <Label>
+            <FontAwesomeIcon icon={faLock} />
+            <PasswordInput
+              type="password"
+              placeholder="비밀번호를 입력해주세요."
+            ></PasswordInput>
+          </Label>
         </FormWrapper>
+        <ButtonWrapper>
+          <LoginButton>로그인</LoginButton>
+          <SignupButton>회원가입</SignupButton>
+        </ButtonWrapper>
       </Container>
     </Background>
   );
 }
 
-const Background = styled.div``;
-const Container = styled.div``;
-const Label = styled.div``;
-const FormWrapper = styled.div``;
-const IdInput = styled.input``;
-const PasswordInput = styled.input``;
+const Background = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #8d8d8d68;
+  height: 100vh;
+`;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 400px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 20px 20px -18px rgba(0, 0, 0, 1);
+`;
+const MainText = styled.span`
+  font-size: 40px;
+  font-weight: 700px;
+  margin-bottom: 30px;
+`;
+const Label = styled.label`
+  font-size: 16px;
+  margin-bottom: 5px;
+`;
+const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+`;
 
-const ButtonWrapper = styled.div``;
-const LoginButton = styled.button``;
-const SignupButton = styled.button``;
+const LoginInput = styled.input`
+  background: none;
+  border: none;
+  border-bottom: 2px solid #0048ff4e;
+  width: 200px;
+  height: 30px;
+  font-size: 14px;
+  margin: 0 0 5px 8px;
+  :focus {
+    outline: none;
+    border-bottom: 2px solid #0048ffba;
+  }
+`;
+const IdInput = styled(LoginInput)``;
+const PasswordInput = styled(LoginInput)``;
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Button = styled.button`
+  border: none;
+  border-radius: 12px;
+  width: 220px;
+  height: 40px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #0048ff7e;
+  :hover {
+    background-color: #0048ffc8;
+  }
+`;
+const LoginButton = styled(Button)`
+  margin-bottom: 10px;
+`;
+const SignupButton = styled(Button)``;
+
 export default Login;
