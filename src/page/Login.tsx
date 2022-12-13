@@ -1,23 +1,127 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { ID_EXP, PW_EXP, URI } from "./Auth";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [userId, setUserId] = useState<String>("");
-  const [userPassword, setUserPassword] = useState<String>("");
+  const loginObject = {
+    id: 1,
+    text: "Login",
+    buttonText: "로그인",
+    isSignIn: true,
+  };
+  const SignUpObject = {
+    id: 2,
+    text: "SignUp",
+    buttonText: "가입하기",
+    isSignIn: false,
+  };
+  const stateText = {
+    idStateText: "이메일 형식에는 '@'가 포함되어야 합니다.",
+    pwStateText: "비밀번호는 8자리가 넘어야 합니다.",
+  };
+
+  const [userId, setUserId] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [loginAndSignUp, setLoginAndSignUp] = useState(loginObject);
+  const { id, text, buttonText, isSignIn } = loginAndSignUp;
+
+  const { idStateText, pwStateText } = stateText;
+  const navigate = useNavigate();
 
   const onChangeId = (e: any) => {
     setUserId(e.target.value);
   };
+
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserPassword(e.target.value);
+  };
+
+  const useGoToSignUp = (e: any) => {
+    setUserId("");
+    setUserPassword("");
+    setLoginAndSignUp(SignUpObject);
+  };
+
+  const goToBack = () => {
+    setUserId("");
+    setUserPassword("");
+    setLoginAndSignUp(loginObject);
+  };
+
+  const loginEvent = () => {
+    console.log(userId);
+    axios
+      .post(
+        `${URI}signin/`,
+        {
+          email: userId,
+          password: userPassword,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      )
+      .then(function (response) {
+        console.log(response);
+        setUserId("");
+        setUserPassword("");
+        const accessToken = response.data.access_token;
+        if (accessToken) {
+          localStorage.setItem("access_token", accessToken);
+        }
+        window.alert("로그인이 되었습니다.");
+        setLoginAndSignUp(loginObject);
+        navigate("/todolist", { replace: true });
+      })
+      .catch(function (error) {
+        window.alert("로그인에 실패하였습니다. 다시 시도해주세요.");
+        console.log(error);
+      });
+  };
+  //apple12@naver.com
+  //12345678
+  const signUpEvent = () => {
+    console.log(userId);
+    console.log(userPassword);
+
+    axios
+      .post(
+        `${URI}signup/`,
+        {
+          email: userId,
+          password: userPassword,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(function (response) {
+        console.log(response);
+        setUserId("");
+        setUserPassword("");
+        window.alert("회원가입이 되었습니다.");
+        setLoginAndSignUp(loginObject);
+      })
+      .catch(function (error) {
+        window.alert("회원가입에 실패하였습니다. 다시 시도해주세요.");
+        console.log(error);
+      });
   };
 
   return (
     <Background>
       <Container>
-        <MainText>Login</MainText>
+        <MainText>{isSignIn === true ? text : text}</MainText>
         <FormWrapper>
           <Label>
             <FontAwesomeIcon icon={faUser} />
@@ -25,6 +129,7 @@ function Login() {
               type="email"
               placeholder="아이디를 입력해주세요."
               onChange={onChangeId}
+              value={userId}
             ></IdInput>
           </Label>
           <Label>
@@ -33,19 +138,37 @@ function Login() {
               type="password"
               placeholder="비밀번호를 입력해주세요."
               onChange={onChangePassword}
+              value={userPassword}
             ></PasswordInput>
           </Label>
+          {userId === ""
+            ? null
+            : !ID_EXP.test(userId) && <StateText>{idStateText}</StateText>}
+          {userPassword === ""
+            ? null
+            : !PW_EXP.test(userPassword) && (
+                <StateText>{pwStateText}</StateText>
+              )}
         </FormWrapper>
         <ButtonWrapper>
-          <LoginButton>로그인</LoginButton>
-          <SignupButton>회원가입</SignupButton>
+          <LoginButton
+            onClick={isSignIn ? loginEvent : signUpEvent}
+            disabled={
+              ID_EXP.test(userId) && PW_EXP.test(userPassword) ? false : true
+            }
+          >
+            {isSignIn === true ? buttonText : buttonText}
+          </LoginButton>
+          <SignupButton onClick={isSignIn ? useGoToSignUp : goToBack}>
+            {isSignIn ? "회원가입" : "로그인화면 돌아가기"}
+          </SignupButton>
         </ButtonWrapper>
       </Container>
     </Background>
   );
 }
 
-const Background = styled.div`
+export const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,7 +203,11 @@ const FormWrapper = styled.div`
   align-items: center;
   margin-bottom: 10px;
 `;
-
+const StateText = styled.p`
+  font-size: 14px;
+  font-weight: 700;
+  color: red;
+`;
 const LoginInput = styled.input`
   background: none;
   border: none;
@@ -115,6 +242,13 @@ const Button = styled.button`
   }
 `;
 const LoginButton = styled(Button)`
+  :disabled {
+    background-color: #6377ab5f;
+    :hover {
+      cursor: default;
+      background-color: #6377ab5f;
+    }
+  }
   margin-bottom: 10px;
 `;
 const SignupButton = styled(Button)``;

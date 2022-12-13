@@ -1,7 +1,22 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
+import { Background } from "./Login";
+import styled from "styled-components";
 
 function TodoList() {
-  return <div>TodoList</div>;
+  return (
+    <>
+      {localStorage.getItem("access_token") === null ? (
+        <Navigate to="/admin" replace={true} />
+      ) : (
+        <Background>
+          <LogoutButton></LogoutButton>todolist
+        </Background>
+      )}
+    </>
+  );
 }
+
+const LogoutButton = style.button``;
 
 export default TodoList;
