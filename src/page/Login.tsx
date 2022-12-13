@@ -89,9 +89,6 @@ function Login() {
   //apple12@naver.com
   //12345678
   const signUpEvent = () => {
-    console.log(userId);
-    console.log(userPassword);
-
     axios
       .post(
         `${URI}signup/`,
