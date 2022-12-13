@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import GlobalStyle from "./components/GlobalStyle";
 import Login from "./page/Login";
-import TodoList from "./page/TodoList";
+import Todo from "./page/Todo";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/todo" element={<TodoList />} />
+        <Route path="/todo" element={<Todo />} />
         <Route path="/*" element={<Navigate to="/"></Navigate>}></Route>
       </Routes>
     </Router>
