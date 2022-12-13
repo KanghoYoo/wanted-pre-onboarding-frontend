@@ -15,7 +15,7 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/todolist" element={<TodoList />} />
+        <Route path="/todo" element={<TodoList />} />
         <Route path="/*" element={<Navigate to="/"></Navigate>}></Route>
       </Routes>
     </Router>

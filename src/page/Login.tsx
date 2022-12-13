@@ -79,7 +79,7 @@ function Login() {
         }
         window.alert("로그인이 되었습니다.");
         setLoginAndSignUp(loginObject);
-        navigate("/todolist", { replace: true });
+        navigate("/todo", { replace: true });
       })
       .catch(function (error) {
         window.alert("로그인에 실패하였습니다. 다시 시도해주세요.");
