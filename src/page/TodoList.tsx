@@ -17,6 +17,6 @@ function TodoList() {
   );
 }
 
-const LogoutButton = style.button``;
+const LogoutButton = styled.button``;
 
 export default TodoList;
