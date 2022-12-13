@@ -1,10 +1,47 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Background, Container } from "./Login";
 import styled from "styled-components";
+import TodoList from "../components/TodoList";
 
-function TodoList() {
-  useEffect(() => {}, []);
+function Todo() {
+  const [todos, setTodos] = useState([{ id: 1, isCheck: false, text: "hi" }]);
+  const [addText, setAddText] = useState("");
+
+  const onChangeTodo = (value: any) => {
+    setTodos(value);
+  };
+
+  const nextId = useRef(2);
+
+  const onInsert = useCallback(
+    (text: any) => {
+      const todo = {
+        id: nextId.current,
+        isCheck: false,
+        text: text,
+      };
+      setTodos(todos.concat(todo));
+      nextId.current++;
+    },
+    [todos]
+  );
+
+  const useOnChangeAddText = useCallback((e: any) => {
+    setAddText(e.target.value);
+  }, []);
+
+  const useAddComponent = () => {
+    onInsert(addText);
+    setAddText("");
+  };
+
+  const onRemove = useCallback(
+    (id: any) => {
+      setTodos(todos.filter((todo) => todo.id !== id));
+    },
+    [todos]
+  );
 
   return (
     <>
@@ -16,20 +53,18 @@ function TodoList() {
           <TodoContainer>
             <MainText>Todo List</MainText>
             <ListContainer>
-              <ListWrap>
-                <TodoTextLabel>
-                  <CheckTodoInput type="checkbox"></CheckTodoInput>
-                  텍스트
-                </TodoTextLabel>
-                <ButtonWrapper>
-                  <ModifyTodoButton>수정</ModifyTodoButton>
-                  <RemoveTodoButton>삭제</RemoveTodoButton>
-                </ButtonWrapper>
-              </ListWrap>
+              <TodoList
+                todos={todos}
+                onRemove={onRemove}
+                onChangeTodo={onChangeTodo}
+              ></TodoList>
             </ListContainer>
             <AddContainer>
-              <AddInputText></AddInputText>
-              <AddTextButton>추가</AddTextButton>
+              <AddInputText
+                onChange={useOnChangeAddText}
+                value={addText}
+              ></AddInputText>
+              <AddTextButton onClick={useAddComponent}>추가</AddTextButton>
             </AddContainer>
           </TodoContainer>
         </Background>
@@ -72,40 +107,6 @@ const ListContainer = styled.div`
   direction: column;
   width: 100%;
 `;
-const ListWrap = styled.div`
-  display: flex;
-  direction: row;
-  justify-content: space-between;
-  padding: 10px 15px;
-  border-bottom: 1px solid #8383ff;
-  width: 100%;
-  height: 40px;
-`;
-
-const TodoTextLabel = styled.label``;
-const CheckTodoInput = styled.input`
-  margin-right: 5px;
-`;
-
-const ButtonWrapper = styled.div``;
-const ModifyTodoButton = styled.button`
-  background: #5e5eff;
-  border: none;
-  width: 40px;
-  height: 20px;
-  margin-left: 5px;
-  border-radius: 4px;
-  color: white;
-`;
-const RemoveTodoButton = styled.button`
-  background: #5e5eff;
-  border: none;
-  width: 40px;
-  height: 20px;
-  margin-left: 5px;
-  border-radius: 4px;
-  color: white;
-`;
 
 const AddContainer = styled.div`
   display: flex;
@@ -141,4 +142,4 @@ const AddTextButton = styled.button`
   height: 40px;
 `;
 
-export default TodoList;
+export default Todo;
