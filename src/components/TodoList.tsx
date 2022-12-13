@@ -2,28 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import TodoListItem from "./TodoListItem";
 
-function TodoList({ todos, onRemove, onChangeTodo }: any) {
+function TodoList({ todos, onRemove, onChangeTodo, onToggle }: any) {
   return (
     <>
-      <ListWrap>
-        {todos.map((todo: any) => (
+      {todos &&
+        todos.map((todoItem: any) => (
           <TodoListItem
             todos={todos}
-            todo={todo}
+            todoItem={todoItem}
             onRemove={onRemove}
             onChangeTodo={onChangeTodo}
-            key={todo.id}
+            onToggle={onToggle}
+            key={todoItem.id}
           />
         ))}
-      </ListWrap>
     </>
   );
 }
-const ListWrap = styled.ul`
-  padding: 10px 15px;
-  border-bottom: 1px solid #8383ff;
-  width: 100%;
-  height: 100%;
-`;
 
 export default TodoList;

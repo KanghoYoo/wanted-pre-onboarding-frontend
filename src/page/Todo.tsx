@@ -1,28 +1,85 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Background, Container } from "./Login";
 import styled from "styled-components";
 import TodoList from "../components/TodoList";
+import axios from "axios";
+
+interface TodoType {
+  id: number;
+  todo: string;
+  isCompleted: boolean;
+  userId: number;
+}
 
 function Todo() {
-  const [todos, setTodos] = useState([{ id: 1, isCheck: false, text: "hi" }]);
+  const [todos, setTodos] = useState<TodoType[]>([]);
   const [addText, setAddText] = useState("");
+  const navigate = useNavigate();
 
-  const onChangeTodo = (value: any) => {
-    setTodos(value);
+  const onClickLogout = () => {
+    localStorage.setItem("access_token", "");
+    navigate("/", { replace: true });
   };
 
-  const nextId = useRef(2);
+  const onChangeTodo = (text: any, todoItem: any) => {
+    axios
+      .put(
+        `https://pre-onboarding-selection-task.shop/todos/${todoItem.id}`,
+        {
+          todo: text,
+          isCompleted: false,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(function (response) {
+        setTodos(
+          todos.map((item: any) => ({
+            ...item,
+            todo: item.id === todoItem.id ? text : item.todo,
+          }))
+        );
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log(text);
+      });
+  };
 
-  const onInsert = useCallback(
-    (text: any) => {
-      const todo = {
-        id: nextId.current,
-        isCheck: false,
-        text: text,
-      };
-      setTodos(todos.concat(todo));
-      nextId.current++;
+  const onToggle = useCallback(
+    (todoItem: any) => {
+      axios
+        .put(
+          `https://pre-onboarding-selection-task.shop/todos/${todoItem.id}`,
+          {
+            todo: todoItem.todo,
+            isCompleted: !todoItem.isCompleted,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then(function (response) {
+          setTodos(
+            todos.map((todo: any) =>
+              todo.id === todoItem.id
+                ? { ...todo, isCompleted: !todo.isCompleted }
+                : todo
+            )
+          );
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     [todos]
   );
@@ -32,32 +89,70 @@ function Todo() {
   }, []);
 
   const useAddComponent = () => {
-    onInsert(addText);
-    setAddText("");
+    axios
+      .post(
+        `https://pre-onboarding-selection-task.shop/todos`,
+        { todo: addText },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(function (response) {
+        setTodos([...todos, response.data]);
+        console.log(response.data);
+        setAddText("");
+      });
   };
 
   const onRemove = useCallback(
     (id: any) => {
-      setTodos(todos.filter((todo) => todo.id !== id));
+      axios
+        .delete(`https://pre-onboarding-selection-task.shop/todos/${id}`, {
+          data: { commentId: 1, userId: 0 },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        })
+        .then(function (response) {
+          setTodos(todos.filter((todoItem) => todoItem.id !== id));
+        });
     },
     [todos]
   );
 
+  useEffect(() => {
+    axios
+      .get(`https://pre-onboarding-selection-task.shop/todos`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      })
+      .then(function (response) {
+        setTodos(response.data);
+      });
+  }, []);
+
   return (
     <>
-      {localStorage.getItem("access_token") === null ? (
-        <Navigate to="/admin" replace={true} />
+      {localStorage.getItem("access_token") === "" ? (
+        <Navigate to="/" replace={true} />
       ) : (
         <Background>
-          <LogoutButton>Logout</LogoutButton>
+          <LogoutButton onClick={onClickLogout}>Logout</LogoutButton>
           <TodoContainer>
             <MainText>Todo List</MainText>
             <ListContainer>
-              <TodoList
-                todos={todos}
-                onRemove={onRemove}
-                onChangeTodo={onChangeTodo}
-              ></TodoList>
+              <ListWrap>
+                <TodoList
+                  todos={todos}
+                  onRemove={onRemove}
+                  onChangeTodo={onChangeTodo}
+                  onToggle={onToggle}
+                ></TodoList>
+              </ListWrap>
             </ListContainer>
             <AddContainer>
               <AddInputText
@@ -105,7 +200,13 @@ const ListContainer = styled.div`
   flex: 7;
   display: flex;
   direction: column;
+  overflow: auto;
   width: 100%;
+`;
+const ListWrap = styled.ul`
+  padding: 10px 15px;
+  width: 100%;
+  height: 100%;
 `;
 
 const AddContainer = styled.div`

@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-function TodoListItem({ todos, todo, onRemove, onChangeTodo }: any) {
+function TodoListItem({
+  todos,
+  todoItem,
+  onRemove,
+  onChangeTodo,
+  onToggle,
+}: any) {
   const [isEdited, setIsEdited] = useState(false);
-  const [modifyText, setModifyText] = useState(todo.text);
-
-  const { id, isCheck, text } = todo;
+  const [modifyText, setModifyText] = useState(todoItem.todo);
 
   const onClickConfirmButton = () => {
-    const modifyTodoList = todos.map((item: any) => ({
-      ...item,
-      text: item.id === todo.id ? modifyText : item.text,
-    }));
-    onChangeTodo(modifyTodoList);
-    console.log(modifyTodoList);
+    onChangeTodo(modifyText, todoItem);
     setIsEdited(false);
   };
 
@@ -28,15 +27,19 @@ function TodoListItem({ todos, todo, onRemove, onChangeTodo }: any) {
   const onClickCancleButton = () => {
     setIsEdited(false);
   };
-
   return (
     <LiTodoItem>
-      <TodoTextLabel htmlFor="todoCheck">
-        <CheckTodoInput type="checkbox" id="todoCheck"></CheckTodoInput>
+      <TodoTextLabel isChecked={todoItem.isCompleted}>
+        <CheckTodoInput
+          type="checkbox"
+          id="todoCheck"
+          checked={todoItem.isCompleted}
+          onChange={() => onToggle(todoItem)}
+        ></CheckTodoInput>
         {isEdited ? (
           <ModifyInputText onChange={onChangeEditInput}></ModifyInputText>
         ) : (
-          text
+          todoItem.todo
         )}
       </TodoTextLabel>
       <ButtonWrapper>
@@ -46,7 +49,7 @@ function TodoListItem({ todos, todo, onRemove, onChangeTodo }: any) {
           {isEdited ? "확인" : "수정"}
         </ModifyTodoButton>
         <RemoveTodoButton
-          onClick={isEdited ? onClickCancleButton : () => onRemove(id)}
+          onClick={isEdited ? onClickCancleButton : () => onRemove(todoItem.id)}
         >
           {isEdited ? "취소" : "삭제"}
         </RemoveTodoButton>
@@ -63,16 +66,18 @@ const LiTodoItem = styled.li`
   height: 40px;
 `;
 
-const TodoTextLabel = styled.label`
+interface TodoTextLabelType {
+  isChecked: boolean;
+}
+
+const TodoTextLabel = styled.label<TodoTextLabelType>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
   height: 100%;
 
-  :after {
-    text-decoration: line-through;
-  }
+  text-decoration: ${(props) => (props.isChecked ? "line-through" : "none")};
 `;
 const CheckTodoInput = styled.input`
   margin-right: 5px;
@@ -109,6 +114,3 @@ const RemoveTodoButton = styled.button`
 `;
 
 export default TodoListItem;
-function setTodos(nextTodoList: any) {
-  throw new Error("Function not implemented.");
-}
