@@ -175,7 +175,7 @@ export const Background = styled.div`
   background-color: #8d8d8d68;
   height: 100vh;
 `;
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
