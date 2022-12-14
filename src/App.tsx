@@ -6,8 +6,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import GlobalStyle from "./components/GlobalStyle";
-import Login from "./page/Login";
-import Todo from "./page/Todo";
+import Login from "./page/login/Login";
+import Todo from "./page/todo/Todo";
 
 function App() {
   return (

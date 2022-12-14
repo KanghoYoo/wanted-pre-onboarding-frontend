@@ -1,14 +1,13 @@
 import React from "react";
-import styled from "styled-components";
+import { todoPropsType, TodoType } from "../page/todo/TodoInterface";
 import TodoListItem from "./TodoListItem";
 
-function TodoList({ todos, onRemove, onChangeTodo, onToggle }: any) {
+function TodoList({ todos, onRemove, onChangeTodo, onToggle }: todoPropsType) {
   return (
     <>
       {todos &&
-        todos.map((todoItem: any) => (
+        todos.map((todoItem: TodoType) => (
           <TodoListItem
-            todos={todos}
             todoItem={todoItem}
             onRemove={onRemove}
             onChangeTodo={onChangeTodo}

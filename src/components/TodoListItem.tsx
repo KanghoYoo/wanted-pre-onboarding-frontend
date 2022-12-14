@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { todoListPropsType } from "../page/todo/TodoInterface";
 
 function TodoListItem({
-  todos,
   todoItem,
   onRemove,
   onChangeTodo,
   onToggle,
-}: any) {
-  const [isEdited, setIsEdited] = useState(false);
-  const [modifyText, setModifyText] = useState(todoItem.todo);
+}: todoListPropsType) {
+  const [isEdited, setIsEdited] = useState<boolean>(false);
+  const [modifyText, setModifyText] = useState<string>(todoItem.todo);
 
   const onClickConfirmButton = () => {
-    onChangeTodo(modifyText, todoItem);
+    onChangeTodo(todoItem, modifyText);
     setIsEdited(false);
   };
 
@@ -34,7 +34,7 @@ function TodoListItem({
           type="checkbox"
           id="todoCheck"
           checked={todoItem.isCompleted}
-          onChange={() => onToggle(todoItem)}
+          onChange={() => onToggle(todoItem, !todoItem.isCompleted)}
         ></CheckTodoInput>
         {isEdited ? (
           <ModifyInputText onChange={onChangeEditInput}></ModifyInputText>
