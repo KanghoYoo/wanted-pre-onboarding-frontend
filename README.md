@@ -6,7 +6,7 @@ wanted pre-onboarding-frontend 사전과제 - 유강호
 
 ### 로그인 화면 `/` - 가입이 안되있는 상황
 
-![Login](https://user-images.githubusercontent.com/96409594/207631087-6afacd2e-4ae3-4684-a7e3-0eb358babfff.gif)
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/96409594/207631726-c9883ac3-acdf-46e2-80a4-9f9711798204.gif)
 
 - 아이디 조건: 아이디는 @포함해야하고 이메일 형식이어야 합니다.
 - 비밀번호 조건: 비밀번호는 8자 이상이어야 합니다.
@@ -19,7 +19,8 @@ wanted pre-onboarding-frontend 사전과제 - 유강호
 
 ### 회원가입 화면 `/` - 회원가입 후 로그인
 
-<video src="./video/회원가입 화면.mov"></video>
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/96409594/207632032-532fb5ff-2f1b-4ef5-b7ee-b9acd9597f23.gif)
+
 
 - 회원가입 화면에서 아이디와 비밀번호 조건은 로그인 조건과 같습니다.
 - 조건에 맞을 경우에만 회원가입 버튼이 활성화 됩니다.
@@ -30,7 +31,7 @@ wanted pre-onboarding-frontend 사전과제 - 유강호
 
 ### Todo 페이지 `/todo`
 
-<video src="./video/Todo 화면.mov"></video>
+![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/96409594/207632253-bf002a00-aae7-408c-b4b7-568faf6d2051.gif)
 
 - 로그인이 안되어있는 상태에서 `/todo` 사이트로 직접 들어가면 다시 로그인 화면으로 돌아옵니다.
 - 하단 `input`창에서 원하는 텍스트를 입력하고 "추가" 버튼을 클릭하면 입력한 텍스트가 To do 항목으로 추가됩니다.
