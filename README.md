@@ -6,11 +6,11 @@ wanted pre-onboarding-frontend 사전과제 - 유강호
 
 ### 로그인 화면 `/` - 가입이 안되있는 상황
 
-<video src="../../../Downloads/화면 기록 2022-12-14 오후 11.22.04.mov"></video>
+<video src="./video/로그인 화면.mov"></video>
 
 - 아이디 조건: 아이디는 @포함해야하고 이메일 형식이어야 합니다.
 
-- 비밀번호 조건:  비밀번호는 8자 이상이어야 합니다.
+- 비밀번호 조건: 비밀번호는 8자 이상이어야 합니다.
 - 로그인 버튼 상단에서 `input` 상태를 알립니다.
 - 아이디 조건과 비밀번호의 조건이 맞지 않으면 로그인 버튼은 비활성화 되고, 조건에 맞을 경우 색상이 바뀌면서 버튼이 활성화 됩니다.
 
@@ -20,7 +20,7 @@ wanted pre-onboarding-frontend 사전과제 - 유강호
 
 ### 회원가입 화면 `/` - 회원가입 후 로그인
 
-<video src="../../../Downloads/화면 기록 2022-12-14 오후 11.32.34.mov"></video>
+<video src="./video/회원가입 화면.mov"></video>
 
 - 회원가입 화면에서 아이디와 비밀번호 조건은 로그인 조건과 같습니다.
 - 조건에 맞을 경우에만 회원가입 버튼이 활성화 됩니다.
@@ -31,7 +31,7 @@ wanted pre-onboarding-frontend 사전과제 - 유강호
 
 ### Todo 페이지 `/todo`
 
-<video src="../../../Downloads/화면 기록 2022-12-14 오후 11.43.37.mov"></video>
+<video src="./video/Todo 화면.mov"></video>
 
 - 로그인이 안되어있는 상태에서 `/todo` 사이트로 직접 들어가면 다시 로그인 화면으로 돌아옵니다.
 - 하단 `input`창에서 원하는 텍스트를 입력하고 "추가" 버튼을 클릭하면 입력한 텍스트가 To do 항목으로 추가됩니다.
@@ -47,4 +47,4 @@ https://kanghoyoo.github.io/wanted-pre-onboarding-frontend/
 
 ## 사용 라이브러리
 
-`typescript`,  `axios`,  `fontawesome`,  `styled-components`,  `git-pages`, `npm`,  `npx create-react-app`
+`typescript`, `axios`, `fontawesome`, `styled-components`, `git-pages`, `npm`, `npx create-react-app`
