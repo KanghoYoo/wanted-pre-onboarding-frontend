@@ -47,4 +47,4 @@ https://kanghoyoo.github.io/wanted-pre-onboarding-frontend/
 
 ## 사용 라이브러리
 
-`typescript`, `axios`, `fontawesome`, `styled-components`, `git-pages`, `npm`, `npx create-react-app`
+`typescript`, `axios`, `fontawesome`, `styled-components`, `git-pages`, `npm`, `npx create-react-app`, `react-router-dom`
