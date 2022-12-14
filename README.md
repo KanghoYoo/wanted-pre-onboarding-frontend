@@ -6,10 +6,9 @@ wanted pre-onboarding-frontend 사전과제 - 유강호
 
 ### 로그인 화면 `/` - 가입이 안되있는 상황
 
-<video src="./video/로그인 화면.mov"></video>
+![Login](https://user-images.githubusercontent.com/96409594/207631087-6afacd2e-4ae3-4684-a7e3-0eb358babfff.gif)
 
 - 아이디 조건: 아이디는 @포함해야하고 이메일 형식이어야 합니다.
-
 - 비밀번호 조건: 비밀번호는 8자 이상이어야 합니다.
 - 로그인 버튼 상단에서 `input` 상태를 알립니다.
 - 아이디 조건과 비밀번호의 조건이 맞지 않으면 로그인 버튼은 비활성화 되고, 조건에 맞을 경우 색상이 바뀌면서 버튼이 활성화 됩니다.
